@@ -11,11 +11,11 @@ import qualified Data.Set as Set
 upperBound = 28123
 
 sumProperDivisors :: Int -> Int
-sumProperDivisors x = 
+sumProperDivisors x =
     sumProperDivisors_ x 1 0
 
 sumProperDivisors_ :: Int -> Int -> Int -> Int
-sumProperDivisors_ x i sum = 
+sumProperDivisors_ x i sum =
     if i <= div x 2
     then sumProperDivisors_ x (i + 1) (new_sum)
     else sum
@@ -28,13 +28,13 @@ listAbundantNumbers i list = if i < upperBound then listAbundantNumbers (i + 1) 
     where newList = if isAbundantNumber i then (i:list) else list
 
 canBeSumOfTwoAbundant _ [] _ = False
-canBeSumOfTwoAbundant i (x:listOfAbundant) setOfAbundant = if Set.member (i - x) setOfAbundant then True else canBeSumOfTwoAbundant i listOfAbundant setOfAbundant 
+canBeSumOfTwoAbundant i (x:listOfAbundant) setOfAbundant = if Set.member (i - x) setOfAbundant then True else canBeSumOfTwoAbundant i listOfAbundant setOfAbundant
 
 totalSum 28123 sum _ _ = sum
 totalSum i sum listOfAbundant setOfAbundant = totalSum (i + 1) newSum listOfAbundant setOfAbundant
     where newSum = if canBeSumOfTwoAbundant i listOfAbundant setOfAbundant then sum else sum + i
 
-main = do 
-    let listOfAbundant = (listAbundantNumbers 1 [])
-    let setOfAbundant = (Set.fromDistinctDescList listOfAbundant)
+main = do
+    let listOfAbundant = listAbundantNumbers 1 []
+    let setOfAbundant = Set.fromDistinctDescList listOfAbundant
     print $ totalSum 0 0 listOfAbundant setOfAbundant
